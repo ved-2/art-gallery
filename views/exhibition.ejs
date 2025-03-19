@@ -1,0 +1,292 @@
+<% layout("/layouts/boilerplate") %>
+
+<style>
+    .exhibition-header {
+        background: linear-gradient(135deg, #2C3E50, #3498DB);
+        padding: 6rem 0;
+        margin-bottom: 4rem;
+        color: white;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .exhibition-header::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: url('/images/pattern.png');
+        opacity: 0.1;
+    }
+
+    .exhibition-card {
+        border: none;
+        border-radius: 20px;
+        overflow: hidden;
+        transition: all 0.3s ease;
+        height: 100%;
+    }
+
+    .exhibition-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    .exhibition-image {
+        height: 250px;
+        object-fit: cover;
+    }
+
+    .status-badge {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        padding: 0.5rem 1rem;
+        border-radius: 50px;
+        font-weight: 500;
+        font-size: 0.9rem;
+    }
+
+    .status-ongoing {
+        background: #2ECC71;
+        color: white;
+    }
+
+    .status-upcoming {
+        background: #F1C40F;
+        color: white;
+    }
+
+    .status-ended {
+        background: #E74C3C;
+        color: white;
+    }
+
+    .date-badge {
+        background: rgba(44, 62, 80, 0.9);
+        color: white;
+        padding: 1rem;
+        border-radius: 10px;
+        position: absolute;
+        left: 20px;
+        bottom: 20px;
+        text-align: center;
+    }
+
+    .date-badge .day {
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1;
+    }
+
+    .date-badge .month {
+        font-size: 0.9rem;
+        text-transform: uppercase;
+    }
+
+    .filter-btn {
+        border: 2px solid #3498DB;
+        color: #3498DB;
+        background: transparent;
+        padding: 0.5rem 1.5rem;
+        border-radius: 50px;
+        margin: 0 0.5rem;
+        transition: all 0.3s ease;
+    }
+
+    .filter-btn:hover, .filter-btn.active {
+        background: #3498DB;
+        color: white;
+    }
+</style>
+
+<div class="exhibition-header position-relative">
+    <div class="container">
+        <div class="row justify-content-center text-center">
+            <div class="col-md-8">
+                <h1 class="display-4 fw-bold mb-4">Art Exhibitions</h1>
+                <p class="lead mb-0">Experience the finest digital art exhibitions from around the world</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container mb-5">
+    <!-- Filter Buttons -->
+    <div class="text-center mb-5">
+        <button class="filter-btn active">All</button>
+        <button class="filter-btn">Ongoing</button>
+        <button class="filter-btn">Upcoming</button>
+        <button class="filter-btn">Past</button>
+    </div>
+
+    <div class="row g-4">
+        <!-- Ongoing Exhibition -->
+        <div class="col-md-6 col-lg-4">
+            <div class="exhibition-card shadow-sm">
+                <div class="position-relative">
+                    <img src="https://images.unsplash.com/photo-1577720643272-265f09367456" class="exhibition-image w-100" alt="Digital Horizons">
+                    <span class="status-badge status-ongoing">Ongoing</span>
+                    <div class="date-badge">
+                        <div class="day">15</div>
+                        <div class="month">Dec</div>
+                    </div>
+                </div>
+                <div class="p-4">
+                    <h4>Digital Horizons</h4>
+                    <p class="text-muted mb-3">Exploring the intersection of technology and traditional art forms.</p>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <span><i class="bi bi-geo-alt"></i> Virtual Gallery Hall 1</span>
+                        <a href="#" class="btn btn-outline-primary">View Details</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Ongoing Exhibition -->
+        <div class="col-md-6 col-lg-4">
+            <div class="exhibition-card shadow-sm">
+                <div class="position-relative">
+                    <img src="https://images.unsplash.com/photo-1561214115-f2f134cc4912" class="exhibition-image w-100" alt="NFT Revolution">
+                    <span class="status-badge status-ongoing">Ongoing</span>
+                    <div class="date-badge">
+                        <div class="day">18</div>
+                        <div class="month">Dec</div>
+                    </div>
+                </div>
+                <div class="p-4">
+                    <h4>NFT Revolution</h4>
+                    <p class="text-muted mb-3">Showcasing the best blockchain-based digital artworks of 2023.</p>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <span><i class="bi bi-geo-alt"></i> Crypto Art Space</span>
+                        <a href="#" class="btn btn-outline-primary">View Details</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Upcoming Exhibition -->
+        <div class="col-md-6 col-lg-4">
+            <div class="exhibition-card shadow-sm">
+                <div class="position-relative">
+                    <img src="https://images.unsplash.com/photo-1550784343-6bd0ce5d600b" class="exhibition-image w-100" alt="AI Artistry">
+                    <span class="status-badge status-upcoming">Upcoming</span>
+                    <div class="date-badge">
+                        <div class="day">20</div>
+                        <div class="month">Dec</div>
+                    </div>
+                </div>
+                <div class="p-4">
+                    <h4>AI Artistry</h4>
+                    <p class="text-muted mb-3">A groundbreaking exhibition of AI-generated and AI-assisted artworks.</p>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <span><i class="bi bi-geo-alt"></i> Tech Art Gallery</span>
+                        <a href="#" class="btn btn-outline-primary">Register</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Upcoming Exhibition -->
+        <div class="col-md-6 col-lg-4">
+            <div class="exhibition-card shadow-sm">
+                <div class="position-relative">
+                    <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe" class="exhibition-image w-100" alt="Digital Sculptures">
+                    <span class="status-badge status-upcoming">Upcoming</span>
+                    <div class="date-badge">
+                        <div class="day">23</div>
+                        <div class="month">Dec</div>
+                    </div>
+                </div>
+                <div class="p-4">
+                    <h4>Digital Sculptures</h4>
+                    <p class="text-muted mb-3">3D digital art pushing the boundaries of virtual sculpture.</p>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <span><i class="bi bi-geo-alt"></i> 3D Art Space</span>
+                        <a href="#" class="btn btn-outline-primary">Register</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Past Exhibition -->
+        <div class="col-md-6 col-lg-4">
+            <div class="exhibition-card shadow-sm">
+                <div class="position-relative">
+                    <img src="https://images.unsplash.com/photo-1563089145-599997674d42" class="exhibition-image w-100" alt="Digital Renaissance">
+                    <span class="status-badge status-ended">Ended</span>
+                    <div class="date-badge">
+                        <div class="day">10</div>
+                        <div class="month">Dec</div>
+                    </div>
+                </div>
+                <div class="p-4">
+                    <h4>Digital Renaissance</h4>
+                    <p class="text-muted mb-3">Classical masterpieces reimagined through digital mediums.</p>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <span><i class="bi bi-geo-alt"></i> Virtual Gallery Hall 3</span>
+                        <a href="#" class="btn btn-outline-primary">View Archive</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Past Exhibition -->
+        <div class="col-md-6 col-lg-4">
+            <div class="exhibition-card shadow-sm">
+                <div class="position-relative">
+                    <img src="https://images.unsplash.com/photo-1561214115-f2f134cc4912" class="exhibition-image w-100" alt="Pixel Perfect">
+                    <span class="status-badge status-ended">Ended</span>
+                    <div class="date-badge">
+                        <div class="day">5</div>
+                        <div class="month">Dec</div>
+                    </div>
+                </div>
+                <div class="p-4">
+                    <h4>Pixel Perfect</h4>
+                    <p class="text-muted mb-3">Celebrating the evolution of pixel art in the digital age.</p>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <span><i class="bi bi-geo-alt"></i> Retro Digital Space</span>
+                        <a href="#" class="btn btn-outline-primary">View Archive</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Newsletter Section -->
+<div class="bg-light py-5">
+    <div class="container">
+        <div class="row justify-content-center text-center">
+            <div class="col-md-8">
+                <h2 class="display-5 fw-bold mb-4">Stay Updated</h2>
+                <p class="lead mb-5">Get notified about upcoming exhibitions and special events</p>
+                <form class="row g-3 justify-content-center">
+                    <div class="col-md-8">
+                        <div class="input-group">
+                            <input type="email" class="form-control form-control-lg" placeholder="Enter your email">
+                            <button class="btn btn-primary btn-lg">Subscribe</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Simple filter functionality
+    document.querySelectorAll('.filter-btn').forEach(button => {
+        button.addEventListener('click', () => {
+            // Remove active class from all buttons
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            // Add active class to clicked button
+            button.classList.add('active');
+        });
+    });
+</script>

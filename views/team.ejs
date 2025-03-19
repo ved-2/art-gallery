@@ -1,0 +1,137 @@
+<% layout("/layouts/boilerplate") %>
+
+<style>
+    .team-header {
+        background: linear-gradient(135deg, #2C3E50, #3498DB);
+        padding: 6rem 0;
+        margin-bottom: 4rem;
+        color: white;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .team-header::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: url('/images/pattern.png');
+        opacity: 0.1;
+    }
+
+    .team-member {
+        border: none;
+        border-radius: 20px;
+        overflow: hidden;
+        transition: all 0.3s ease;
+        background: white;
+    }
+
+    .team-member:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    .member-image {
+        height: 300px;
+        object-fit: cover;
+        border-bottom: 5px solid #3498DB;
+    }
+
+    .member-social {
+        margin-top: -25px;
+        position: relative;
+        z-index: 1;
+    }
+
+    .social-icon {
+        width: 40px;
+        height: 40px;
+        background: #3498DB;
+        border-radius: 50%;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        margin: 0 5px;
+        transition: all 0.3s ease;
+    }
+
+    .social-icon:hover {
+        background: #2C3E50;
+        transform: translateY(-3px);
+    }
+
+    .member-role {
+        color: #3498DB;
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        font-size: 0.9rem;
+    }
+</style>
+
+<div class="team-header position-relative">
+    <div class="container">
+        <div class="row justify-content-center text-center">
+            <div class="col-md-8">
+                <h1 class="display-4 fw-bold mb-4">Meet Our Team</h1>
+                <p class="lead mb-0">The creative minds behind Digital Art Gallery</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container mb-5">
+    <div class="row g-4">
+        <div class="col-md-4">
+            <div class="team-member shadow-sm">
+                <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" alt="Vedant Kolte" class="member-image w-100">
+                <div class="p-4 text-center">
+                    <h4 class="mb-2">Vedant Kolte</h4>
+                    <p class="member-role mb-3">B-05</p>
+                    <!-- <p class="text-muted mb-0">Leading the technical development and architecture of the Digital Art Gallery platform.</p> -->
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="team-member shadow-sm">
+                <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" alt="Preshita Nalawade" class="member-image w-100">
+                <div class="p-4 text-center">
+                    <h4 class="mb-2">Preshita Nalawade</h4>
+                    <p class="member-role mb-3">B-21</p>
+                    <!-- <p class="text-muted mb-0">Creating intuitive and beautiful user experiences for our digital art platform.</p> -->
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="team-member shadow-sm">
+                <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" alt="Krish Mali" class="member-image w-100">
+                <div class="p-4 text-center">
+                    <h4 class="mb-2">Krish Mali</h4>
+                    <p class="member-role mb-3">B-09</p>
+                    <!-- <p class="text-muted mb-0">Managing database architecture and server-side operations for seamless functionality.</p> -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Contact Section -->
+<div class="bg-light py-5">
+    <div class="container">
+        <div class="row justify-content-center text-center">
+            <div class="col-md-8">
+                <h2 class="display-5 fw-bold mb-4">Get in Touch</h2>
+                <p class="lead mb-5">Have questions or suggestions? We'd love to hear from you!</p>
+                <a href="mailto:team@digitalartgallery.com" class="btn btn-primary btn-lg">
+                    <i class="bi bi-envelope-fill me-2"></i>Contact Us
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,62 @@
+<% layout("/layouts/boilerplate") %>
+
+
+<div class="row mt-3">
+    <div class="col-8 offset-2">
+        <h3>Edit Art</h3>
+        <br>
+        <form method="POST" action="/arts/<%= artInstance._id %>?_method=PUT">
+            <div class="mb-3">
+                <label for="title" class="form-label">Title</label>
+                <input name="art[title]" value="<%= artInstance.title %>" placeholder="enter title" type="text" class="form-control"/>
+            </div>
+
+            <div class="mb-3">
+                <label for="description" class="form-label">Description</label>
+                <textarea name="art[description]" class="form-control" placeholder="enter description"><%= artInstance.description %></textarea>
+            </div>
+            <div class="row">
+              <div class="mb-3 col-md-4">
+                <p>Original Listing Image</p>
+                <img src="<%= artInstance.image %>" width="170px" />
+              </div>
+            
+              <div class="mb-3 col-md-8">
+                <label for="image" class="form-label">Upload New Image Or Else No Change</label>
+                <textarea name="art[image]"  placeholder="enter image url" type="text" class="form-control" style="height: 150px;"><%= artInstance.image %></textarea>
+              </div>
+            </div>
+
+            <div class="mb-3">
+                <label for="artistName" class="form-label">Artist Name</label>
+                <input name="art[artistName]" value="<%= artInstance.artistName %>" placeholder="enter artist name" type="text" class="form-control"/>
+            </div>
+
+            <div class="mb-3">
+                <label for="price" class="form-label">Price</label>
+                <input name="art[price]" value="<%= artInstance.price %>" placeholder="enter price" type="number" class="form-control"/>
+            </div>
+
+            <div class="mb-3">
+                <label for="category">Category</label>
+                <select id="category" name="art[category]" class="form-control" required>
+                    <option value="" disabled selected>Select an art category</option>
+                    <option value="Painting">Painting</option>
+                    <option value="Sculpture">Sculpture</option>
+                    <option value="Digital Art">Digital Art</option>
+                    <option value="Photography">Photography</option>
+                    <option value="Calligraphy">Calligraphy</option>
+                    <option value="Abstract Art">Abstract Art</option>
+                    <option value="Portrait">Portrait</option>
+                    <option value="Landscape">Landscape</option>
+                    <option value="Street Art">Street Art</option>
+                    <option value="Collage">Collage</option>
+                    <option value="Installation Art">Installation Art</option>
+                </select>
+            </div>
+
+            <button class="btn btn-dark add-btn mt-3">Update</button>
+            <br><br>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,72 @@
+<% layout("/layouts/boilerplate") %>
+
+<div >
+
+  <div class="container mt-3 "></div>
+    <div class="row"></div>
+      <div class="col-12 text-center">
+        <h1 class="display-8">
+          <b><%= artInstance.title %></b>
+        </h1>
+      </div>
+    </div>
+    <br>
+<div class="mt-3">
+
+      <div class="col-md-8 offset-md-2 ">
+        <div class="card d-flex justify-content-center align-items-center" style="border: none !important;">
+
+          <img src="<%= artInstance.image %>" class="card-img-top" alt="Listing_image">
+          
+          <br>
+          <div class="card-body">
+            <h3 class="card-title mt-3 d-flex justify-content-center"><%= artInstance.description %></h3>
+
+            <h5 class="card-text mt-3 d-flex justify-content-end"> ~ By <i><%= artInstance.artistName %></i></h5>
+
+            <h5 class="card-text">Price: &#8377; <%= artInstance.price.toLocaleString("en-IN") %></h5>
+
+            <h5 class="card-text">Category: <%= artInstance.category %></h5>
+
+            
+            
+            <div class="d-flex justify-content-around mt-4">
+              <a href="/arts/<%= artInstance._id %>/edit" class="btn btn-primary">Edit</a>
+
+              <a href="/arts/<%= artInstance._id %>/buy" class="btn btn-primary">Buy</a>
+
+              <form method="POST" action="/arts/<%= artInstance.id %>?_method=DELETE">
+                <button class="btn btn-danger">Delete</button>
+              </form>
+            </div>
+            <br><br>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- <div class="card mb-3 container d-flex justify-content-center align-items-center " style="max-width: 540px; border: none !important;">
+      <div class="row g-0 d-flex justify-content-center align-items-center">
+        <div class="col-md-4">
+          <img src="<%= artInstance.image %>" class="img-fluid rounded-start" alt="Image Not Found">
+        </div>
+
+        <div class="col-md-8 ">
+          <div class="card-body">
+            <h5 class="card-title">By <i><%= artInstance.artistName %></i></h5>
+            <p class="card-text" style="margin-top: 15px;"><%= artInstance.description %></p>
+            <p class="card-text">Price : &#8377; <%= artInstance.price.toLocaleString("en-IN") %></p>
+            <p class="card-text">Category : <%= artInstance.category %></p>
+            
+            <div class="d-flex justify-content-around mt-4">
+              <a href="/arts/<%= artInstance._id %>/edit" class="btn btn-primary">Edit</a>
+
+              <a href="/arts/<%= artInstance._id %>/buy" class="btn btn-primary">Buy</a>
+
+        </div>
+
+      </div>
+    </div> -->
+
+  </div>
+</div>

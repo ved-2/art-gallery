@@ -1,0 +1,162 @@
+<% layout("/layouts/boilerplate") %>
+
+<style>
+    .artist-header {
+        background: linear-gradient(135deg, #2C3E50, #3498DB);
+        padding: 6rem 0;
+        margin-bottom: 4rem;
+        color: white;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .artist-header::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: url('/images/pattern.png');
+        opacity: 0.1;
+    }
+
+    .artist-card {
+        border: none;
+        border-radius: 15px;
+        overflow: hidden;
+        transition: all 0.3s ease;
+    }
+
+    .artist-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    .artist-image {
+        height: 300px;
+        object-fit: cover;
+    }
+
+    .artist-social {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        display: flex;
+        gap: 10px;
+    }
+
+    .social-icon {
+        width: 35px;
+        height: 35px;
+        background: rgba(255, 255, 255, 0.9);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #2C3E50;
+        transition: all 0.3s ease;
+    }
+
+    .social-icon:hover {
+        background: #3498DB;
+        color: white;
+    }
+
+    .artist-info {
+        padding: 1.5rem;
+    }
+
+    .artist-category {
+        color: #3498DB;
+        font-weight: 500;
+        margin-bottom: 0.5rem;
+    }
+
+    .artwork-count {
+        background: #F8F9FA;
+        padding: 0.5rem 1rem;
+        border-radius: 20px;
+        font-size: 0.9rem;
+        color: #2C3E50;
+    }
+
+    .specialization-badge {
+        background: #3498DB;
+        color: white;
+        padding: 0.3rem 0.8rem;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        margin-right: 0.5rem;
+        margin-bottom: 0.5rem;
+        display: inline-block;
+    }
+
+    .contact-info {
+        color: #666;
+        font-size: 0.9rem;
+        margin-top: 1rem;
+    }
+
+    .contact-info i {
+        width: 20px;
+        color: #3498DB;
+    }
+
+    .specializations-container {
+        margin: 1rem 0;
+    }
+</style>
+
+<div class="artist-header position-relative">
+    <div class="container">
+        <div class="row justify-content-center text-center">
+            <div class="col-md-8">
+                <h1 class="display-4 fw-bold mb-4">Our Featured Artists</h1>
+                <p class="lead mb-0">Discover renowned artists from different specializations</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container mb-5">
+    <div class="row g-4">
+        <% artists.forEach(artist => { %>
+            <div class="col-md-4">
+                <div class="team-member shadow-sm">
+                    <img src="<%= artist.profileImage %>" alt="<%= artist.artistName %>" class="member-image w-100">
+                    <div class="p-4">
+                        <h4 class="mb-2"><%= artist.artistName %></h4>
+                        <div class="specializations-container">
+                            <% artist.specialization.split(', ').forEach(spec => { %>
+                                <span class="specialization-badge"><%= spec %></span>
+                            <% }) %>
+                        </div>
+                        <p class="text-muted mb-3"><%= artist.bio %></p>
+                        <div class="contact-info">
+                            <p><i class="bi bi-envelope"></i> <%= artist.email %></p>
+                            <p><i class="bi bi-telephone"></i> <%= artist.contactNumber %></p>
+                        </div>
+                        <a href="/artists/<%= artist._id %>" class="btn btn-outline-primary w-100 mt-3">View Profile</a>
+                    </div>
+                </div>
+            </div>
+        <% }) %>
+    </div>
+</div>
+
+<!-- Join Section -->
+<div class="bg-light py-5">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-md-7">
+                <h2 class="display-5 fw-bold mb-4">Want to Join Our Artist Community?</h2>
+                <p class="lead mb-4">Share your artwork with our global community and start selling your digital masterpieces today.</p>
+                <a href="/arts/new" class="btn btn-primary btn-lg">Start Selling</a>
+            </div>
+            <div class="col-md-5">
+                <img src="/images/join-artist.jpg" alt="Join Artists" class="img-fluid rounded-3 shadow">
+            </div>
+        </div>
+    </div>
+</div>

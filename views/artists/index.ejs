@@ -1,0 +1,120 @@
+<% layout('layouts/boilerplate') %>
+
+<section class="artist-page">
+    <!-- Hero Section -->
+    <div class="hero-section text-center py-5 bg-light">
+        <div class="container">
+            <h1 class="display-4 mb-3">Meet Our Artists</h1>
+            <p class="lead text-muted">Discover the talented creators who bring art to life</p>
+        </div>
+    </div>
+
+    <!-- Artists Grid Section -->
+    <div class="container py-5">
+        <!-- Specialization Filter -->
+        <div class="filter-section mb-5">
+            <div class="d-flex justify-content-center gap-3 flex-wrap">
+                <button class="btn btn-outline-primary active" data-filter="all">All Artists</button>
+                <button class="btn btn-outline-primary" data-filter="Digital Art">Digital Artists</button>
+                <button class="btn btn-outline-primary" data-filter="Abstract Art">Abstract Artists</button>
+                <button class="btn btn-outline-primary" data-filter="Traditional Art">Traditional Artists</button>
+                <button class="btn btn-outline-primary" data-filter="Sculpture">Sculptors</button>
+            </div>
+        </div>
+
+        <!-- Artists Grid -->
+        <div class="row g-4">
+            <% artists.forEach(artist => { %>
+                <div class="col-md-6 col-lg-3 artist-item" data-category="<%= artist.specialization %>">
+                    <div class="card h-100 artist-card border-0 shadow-sm">
+                        <div class="position-relative">
+                            <img src="<%= artist.profileImage %>" 
+                                 class="card-img-top" 
+                                 alt="<%= artist.artistName %>"
+                                 style="height: 300px; object-fit: cover;">
+                            <div class="specialty-badge position-absolute top-0 end-0 m-3">
+                                <span class="badge bg-primary"><%= artist.specialization %></span>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title mb-1"><%= artist.artistName %></h5>
+                            <p class="card-text small text-muted mb-3"><%= artist.bio %></p>
+                            <div class="contact-info small mb-3">
+                                <p class="mb-1">
+                                    <i class="fas fa-envelope me-2 text-primary"></i>
+                                    <%= artist.email %>
+                                </p>
+                                <p class="mb-0">
+                                    <i class="fas fa-phone me-2 text-primary"></i>
+                                    <%= artist.contactNumber %>
+                                </p>
+                            </div>
+                            <a href="/artists/<%= artist._id %>" class="btn btn-outline-primary btn-sm w-100">View Profile</a>
+                        </div>
+                    </div>
+                </div>
+            <% }) %>
+        </div>
+    </div>
+</section>
+
+<style>
+    .artist-card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .artist-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.1) !important;
+    }
+
+    .specialty-badge .badge {
+        font-size: 0.8rem;
+        padding: 0.5em 1em;
+    }
+
+    .filter-section .btn {
+        border-radius: 20px;
+        padding: 0.5rem 1.5rem;
+    }
+
+    .filter-section .btn.active {
+        background-color: #007bff;
+        color: white;
+    }
+
+    .hero-section {
+        background: linear-gradient(to right, #f8f9fa, #e9ecef);
+        padding: 4rem 0;
+    }
+
+    .contact-info i {
+        width: 20px;
+    }
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const filterButtons = document.querySelectorAll('.filter-section .btn');
+    const artistItems = document.querySelectorAll('.artist-item');
+
+    filterButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            // Remove active class from all buttons
+            filterButtons.forEach(btn => btn.classList.remove('active'));
+            // Add active class to clicked button
+            this.classList.add('active');
+
+            const filter = this.getAttribute('data-filter');
+
+            artistItems.forEach(item => {
+                if (filter === 'all' || item.getAttribute('data-category') === filter) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        });
+    });
+});
+</script> 

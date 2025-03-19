@@ -1,0 +1,20 @@
+<% layout("/layouts/boilerplate") %>
+
+  <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1 mt-3">
+    <% for(let art of allArts){ %>
+      <a href="/arts/<%= art._id %>" class="art-link">
+        <div class="card art-card col" data-category="<%= art.category %>">
+          <img src="<%= art.image %>" class="card-img-top" alt="Art_image" style="height: 20rem">
+          <div class="card-img-overlay"></div>
+          <div class="card-body">
+            <p class="card-text">
+              <b>
+                <%= art.title %>
+              </b><br>
+              &#8377 <%= (art.price ? art.price.toLocaleString("en-IN") : 'N/A' ) %>
+            </p>
+          </div>
+        </div>
+      </a>
+      <% } %>
+  </div>

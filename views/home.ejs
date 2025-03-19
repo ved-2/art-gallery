@@ -1,0 +1,453 @@
+<% layout("/layouts/boilerplate") %>
+
+<!-- Add this CSS at the top of your file -->
+<style>
+    :root {
+        --primary-color: #2C3E50;
+        --secondary-color: #E74C3C;
+        --accent-color: #3498DB;
+        --light-bg: #F8F9FA;
+        --dark-bg: #2C3E50;
+        --text-light: #ECF0F1;
+        --text-dark: #2C3E50;
+    }
+
+    .hero-section {
+        background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+        min-height: 100vh;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .hero-section::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: url('/images/pattern.png');
+        opacity: 0.1;
+    }
+
+    .hero-content {
+        position: relative;
+        z-index: 2;
+        padding: 8rem 0;
+    }
+
+    .text-primary {
+        color: var(--accent-color) !important;
+    }
+
+    .bg-primary {
+        background-color: var(--primary-color) !important;
+    }
+
+    .btn-primary {
+        background-color: var(--accent-color);
+        border-color: var(--accent-color);
+    }
+
+    .btn-primary:hover {
+        background-color: #2980B9;
+        border-color: #2980B9;
+    }
+
+    .btn-outline-primary {
+        color: var(--accent-color);
+        border-color: var(--accent-color);
+    }
+
+    .btn-outline-primary:hover {
+        background-color: var(--accent-color);
+        border-color: var(--accent-color);
+    }
+
+    .price-badge {
+        background-color: var(--secondary-color);
+    }
+
+    .hover-card {
+        transition: all 0.3s ease;
+        border: 1px solid transparent;
+    }
+
+    .hover-card:hover {
+        transform: translateY(-10px);
+        border-color: var(--accent-color);
+        box-shadow: 0 10px 20px rgba(52, 152, 219, 0.1) !important;
+    }
+
+    .hover-zoom {
+        transition: all 0.3s ease;
+    }
+
+    .hover-zoom:hover {
+        transform: scale(1.03);
+        box-shadow: 0 10px 20px rgba(52, 152, 219, 0.1) !important;
+    }
+
+    .newsletter-section {
+        background: linear-gradient(45deg, var(--primary-color), var(--accent-color));
+        position: relative;
+        overflow: hidden;
+    }
+
+    .newsletter-section::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: url('/images/pattern.png');
+        opacity: 0.1;
+    }
+
+    .animate__animated {
+        animation-duration: 1s;
+    }
+
+    .feature-icon {
+        width: 80px;
+        height: 80px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 1.5rem;
+        border-radius: 50%;
+        background: linear-gradient(135deg, var(--accent-color), var(--primary-color));
+        color: white;
+    }
+
+    .section {
+        padding: 5rem 0;
+    }
+
+    .section-light {
+        background-color: var(--light-bg);
+    }
+
+    .section-dark {
+        background-color: var(--dark-bg);
+        color: var(--text-light);
+    }
+
+    .container-fluid {
+        padding-left: 3rem;
+        padding-right: 3rem;
+    }
+
+    .stats-container {
+        background: rgba(255, 255, 255, 0.1);
+        padding: 2rem;
+        border-radius: 1rem;
+        backdrop-filter: blur(10px);
+        margin-top: -5rem;
+        position: relative;
+        z-index: 2;
+    }
+
+    .glass-card {
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 16px;
+    }
+
+    .artwork-card {
+        border-radius: 16px;
+        overflow: hidden;
+        transition: all 0.3s ease;
+    }
+
+    .artwork-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    }
+
+    .artwork-card img {
+        height: 250px;
+        object-fit: cover;
+    }
+
+    .stats-number {
+        font-size: 3.5rem;
+        font-weight: 700;
+        background: linear-gradient(45deg, var(--accent-color), var(--secondary-color));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    .section-header {
+        text-align: center;
+        margin-bottom: 4rem;
+    }
+
+    .section-header h2 {
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+        position: relative;
+        display: inline-block;
+    }
+
+    .section-header h2::after {
+        content: '';
+        position: absolute;
+        left: 50%;
+        bottom: -10px;
+        transform: translateX(-50%);
+        width: 50px;
+        height: 3px;
+        background: var(--accent-color);
+    }
+
+    .btn-custom {
+        padding: 1rem 2rem;
+        border-radius: 50px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+    }
+
+    .btn-custom:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .hero-image-container {
+        position: relative;
+        border-radius: 24px;
+        overflow: hidden;
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        padding: 20px;
+        transform: perspective(1000px) rotateY(-5deg);
+        transition: all 0.5s ease;
+    }
+
+    .hero-image-container:hover {
+        transform: perspective(1000px) rotateY(0deg);
+    }
+
+    .hero-image {
+        width: 100%;
+        height: 600px;
+        object-fit: cover;
+        border-radius: 16px;
+        transition: all 0.5s ease;
+    }
+
+    .featured-badge {
+        position: absolute;
+        top: 30px;
+        right: 30px;
+        background: linear-gradient(135deg, var(--accent-color), var(--secondary-color));
+        color: white;
+        padding: 8px 20px;
+        border-radius: 50px;
+        font-weight: 500;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        backdrop-filter: blur(5px);
+    }
+
+    .min-vh-100 {
+        min-height: 100vh;
+    }
+
+    .btn-custom {
+        padding: 12px 30px;
+        border-radius: 50px;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+        transition: all 0.3s ease;
+    }
+
+    .btn-custom:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .hero-section::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 50%;
+        height: 100%;
+        background: radial-gradient(circle at center, rgba(52, 152, 219, 0.1) 0%, transparent 70%);
+        z-index: 1;
+    }
+</style>
+
+<!-- Hero Section with Animated Text -->
+<div class="hero-section text-white position-relative">
+    <div class="container-fluid">
+        <div class="row align-items-center min-vh-100">
+            <div class="col-md-6 pe-5">
+                <h1 class="display-3 fw-bold mb-4 animate__animated animate__fadeInLeft">
+                    Discover Digital Art Excellence
+                </h1>
+                <p class="lead mb-4 animate__animated animate__fadeInUp animate__delay-1s">
+                    Explore a curated collection of exceptional digital artworks from talented artists worldwide.
+                </p>
+                <div class="animate__animated animate__fadeInUp animate__delay-2s">
+                    <a href="/arts" class="btn btn-custom btn-light btn-lg me-3">
+                        <i class="bi bi-grid-3x3-gap me-2"></i>Browse Gallery
+                    </a>
+                    <a href="/arts/new" class="btn btn-custom btn-outline-light btn-lg">
+                        <i class="bi bi-plus-circle me-2"></i>Sell Artwork
+                    </a>
+                </div>
+            </div>
+            <div class="col-md-6 animate__animated animate__fadeInRight">
+                <div class="hero-image-container glass-card p-3">
+                    <img src="https://images.unsplash.com/photo-1577720643272-265f09367456?auto=format&fit=crop&w=2000&q=80" 
+                         alt="Digital Art" 
+                         class="hero-image rounded-4 shadow-lg">
+                    <div class="featured-badge">
+                        Featured
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Stats Section -->
+<div class="section">
+    <div class="container-fluid">
+        <div class="glass-card shadow p-5">
+            <div class="row text-center g-4">
+                <div class="col-md-3">
+                    <div class="stats-number">500+</div>
+                    <p class="text-uppercase fw-bold mb-0">Artworks</p>
+                </div>
+                <div class="col-md-3">
+                    <div class="stats-number">200+</div>
+                    <p class="text-uppercase fw-bold mb-0">Artists</p>
+                </div>
+                <div class="col-md-3">
+                    <div class="stats-number">1000+</div>
+                    <p class="text-uppercase fw-bold mb-0">Customers</p>
+                </div>
+                <div class="col-md-3">
+                    <div class="stats-number">50+</div>
+                    <p class="text-uppercase fw-bold mb-0">Countries</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Features Section -->
+<div class="section section-light">
+    <div class="container-fluid">
+        <div class="section-header">
+            <h2>Why Choose Us</h2>
+            <p class="text-muted">Experience the best in digital art collection</p>
+        </div>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="card h-100 border-0 shadow-sm hover-card">
+                    <div class="card-body text-center p-4">
+                        <div class="feature-icon">
+                            <i class="bi bi-palette fs-1"></i>
+                        </div>
+                        <h3 class="card-title">Unique Artworks</h3>
+                        <p class="card-text">Browse through our curated collection of digital masterpieces.</p>
+                        <a href="/arts" class="btn btn-outline-primary mt-3">View Gallery</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100 border-0 shadow-sm hover-card">
+                    <div class="card-body text-center p-4">
+                        <div class="feature-icon">
+                            <i class="bi bi-shield-check fs-1"></i>
+                        </div>
+                        <h3 class="card-title">Secure Purchase</h3>
+                        <p class="card-text">Buy with confidence using our secure payment system.</p>
+                        <a href="#" class="btn btn-outline-primary mt-3">Learn More</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100 border-0 shadow-sm hover-card">
+                    <div class="card-body text-center p-4">
+                        <div class="feature-icon">
+                            <i class="bi bi-people fs-1"></i>
+                        </div>
+                        <h3 class="card-title">Artist Community</h3>
+                        <p class="card-text">Connect with talented artists from around the globe.</p>
+                        <a href="/team" class="btn btn-outline-primary mt-3">Meet Artists</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Latest Artworks -->
+<div class="section">
+    <div class="container-fluid">
+        <div class="section-header">
+            <h2>Latest Masterpieces</h2>
+            <p class="text-muted">Discover our newest additions</p>
+        </div>
+        <div class="row g-4">
+            <% if (arts && arts.length) { %>
+                <% for(let art of arts) { %>
+                    <div class="col-md-3">
+                        <a href="/arts/<%= art._id %>" class="art-link">
+                            <div class="card art-card" data-category="<%= art.category %>">
+                                <img src="<%= art.image %>" class="card-img-top" alt="Art_image" style="height: 20rem">
+                                <div class="card-body">
+                                    <p class="card-text">
+                                        <b><%= art.title %></b><br>
+                                        ₹<%= (art.price ? art.price.toLocaleString("en-IN") : 'N/A') %>
+                                    </p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                <% } %>
+            <% } else { %>
+                <div class="col-12 text-center">
+                    <p>No artworks available at the moment.</p>
+                </div>
+            <% } %>
+        </div>
+        <div class="text-center mt-5">
+            <a href="/arts" class="btn btn-custom btn-outline-primary">View All Artworks</a>
+        </div>
+    </div>
+</div>
+
+<!-- Newsletter Section -->
+<div class="newsletter-section py-5">
+    <div class="container-fluid position-relative">
+        <div class="row justify-content-center">
+            <div class="col-md-8 text-center text-white">
+                <h2 class="display-4 mb-4">Stay Inspired</h2>
+                <p class="lead mb-5">Join our community and get exclusive updates</p>
+                <div class="glass-card p-4">
+                    <form class="row g-3 justify-content-center">
+                        <div class="col-md-8">
+                            <div class="input-group input-group-lg">
+                                <input type="email" class="form-control" placeholder="Enter your email">
+                                <button type="submit" class="btn btn-custom btn-light">Subscribe</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Add link to animate.css in your head -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"> 
