@@ -11,8 +11,51 @@ body {
 
 /* Navbar */
 .navbar {
-    height: 5rem;
-    background-color: white;
+    padding: 1rem 2rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.navbar-nav {
+    align-items: center;
+}
+
+.nav-link {
+    font-weight: 500;
+    color: #2c3e50 !important;
+    padding: 0.5rem 1rem !important;
+    transition: all 0.3s ease;
+}
+
+.nav-link:hover {
+    color: #3498db !important;
+    transform: translateY(-2px);
+}
+
+/* Admin specific nav items */
+.nav-link[href="/arts/new"] {
+    background-color: #2ecc71;
+    color: white !important;
+    border-radius: 5px;
+    margin-left: 1rem;
+}
+
+.nav-link[href="/arts/new"]:hover {
+    background-color: #27ae60;
+    color: white !important;
+}
+
+/* Logout button */
+.nav-link[href="/logout"] {
+    color: #e74c3c !important;
+}
+
+.nav-link[href="/logout"]:hover {
+    color: #c0392b !important;
+}
+
+/* Reset any dark theme or background that might be inherited */
+body nav {
+    background-color: #ffffff !important;
 }
 
 .fa-compass {
@@ -117,4 +160,327 @@ body {
 .show-card {
     padding-left: 0;
     padding-right: 0;
+}
+
+.navbar .nav-link {
+    transition: opacity 0.3s ease;
+}
+
+.navbar .nav-link:hover {
+    opacity: 0.8;
+}
+
+/* User view specific styles */
+.user-art-card {
+    border-radius: 15px;
+    overflow: hidden;
+    background: white;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    margin-bottom: 20px;
+    border: none;
+    cursor: pointer;
+}
+
+.user-art-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.art-image-container {
+    position: relative;
+    height: 250px;
+    overflow: hidden;
+}
+
+.user-art-card .card-img-top {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.user-art-card:hover .card-img-top {
+    transform: scale(1.05);
+}
+
+.user-art-card .card-body {
+    padding: 1.25rem !important;
+    background: white;
+}
+
+.user-art-card .card-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #2c3e50;
+    margin-bottom: 0.5rem;
+}
+
+.user-art-card .card-text {
+    font-size: 0.9rem;
+    color: #666;
+    line-height: 1.4;
+}
+
+.user-art-card .art-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+.user-art-card .art-link:hover {
+    text-decoration: none;
+    color: inherit;
+}
+
+.price-view-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1rem;
+}
+
+.price-tag {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #2ecc71;
+    margin: 0;
+}
+
+.btn-view {
+    background-color: #3498db;
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    transition: background-color 0.3s ease;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.btn-view:hover {
+    background-color: #2980b9;
+    color: white;
+}
+
+/* Show page specific styles */
+.user-show-card {
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.user-show-card .card-img-top {
+    height: 400px;
+    object-fit: cover;
+}
+
+.user-show-card .card-body {
+    padding: 2rem !important;
+}
+
+.user-show-card .btn-info {
+    background-color: #3498db;
+    border: none;
+    color: white;
+}
+
+.user-show-card .btn-success {
+    background-color: #2ecc71;
+    border: none;
+}
+
+.user-show-card .btn-info:hover {
+    background-color: #2980b9;
+}
+
+.user-show-card .btn-success:hover {
+    background-color: #27ae60;
+}
+
+.btn-primary {
+    background-color: #3498db;
+    border-color: #3498db;
+}
+
+.btn-primary:hover {
+    background-color: #2980b9;
+    border-color: #2980b9;
+}
+
+.btn-success {
+    background-color: #2ecc71;
+    border-color: #2ecc71;
+}
+
+.btn-success:hover {
+    background-color: #27ae60;
+    border-color: #27ae60;
+}
+
+/* Image modal styles */
+.cursor-pointer {
+    cursor: pointer;
+}
+
+.image-modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    padding-top: 50px;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.9);
+}
+
+.modal-content {
+    margin: auto;
+    display: block;
+    max-width: 90%;
+    max-height: 90vh;
+    object-fit: contain;
+}
+
+.close-modal {
+    position: absolute;
+    right: 35px;
+    top: 15px;
+    color: #f1f1f1;
+    font-size: 40px;
+    font-weight: bold;
+    cursor: pointer;
+    z-index: 1001;
+}
+
+.close-modal:hover,
+.close-modal:focus {
+    color: #bbb;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Animation for modal */
+.modal-content {
+    animation: zoom 0.3s ease-in-out;
+}
+
+@keyframes zoom {
+    from {
+        transform: scale(0.1);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+/* Responsive adjustments */
+@media only screen and (max-width: 700px) {
+    .modal-content {
+        width: 100%;
+    }
+}
+
+/* Admin specific styles */
+.btn-add-art {
+    background-color: #2ecc71;
+    color: white;
+    padding: 0.8rem 1.5rem;
+    border-radius: 8px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    border: none;
+}
+
+.btn-add-art:hover {
+    background-color: #27ae60;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(46, 204, 113, 0.2);
+}
+
+.btn-add-art i {
+    margin-right: 8px;
+}
+
+.admin-art-card {
+    border-radius: 15px;
+    overflow: hidden;
+    background: white;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    margin-bottom: 20px;
+    border: none;
+}
+
+.admin-art-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.price-action-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1rem;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 8px;
+}
+
+.btn-view {
+    background-color: #3498db;
+    color: white;
+}
+
+.btn-edit {
+    background-color: #f39c12;
+    color: white;
+}
+
+.btn-delete {
+    background-color: #e74c3c;
+    color: white;
+}
+
+.btn-view:hover, .btn-edit:hover, .btn-delete:hover {
+    color: white;
+    filter: brightness(90%);
+}
+
+.btn-view, .btn-edit, .btn-delete {
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    border: none;
+    transition: all 0.3s ease;
+    font-size: 0.9rem;
+}
+
+/* Add New Art button in navbar */
+.nav-link.add-new-art {
+    background-color: #2ecc71;
+    color: white !important;
+    border-radius: 8px;
+    padding: 8px 16px !important;
+    margin: 0 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s ease;
+}
+
+.nav-link.add-new-art:hover {
+    background-color: #27ae60;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(46, 204, 113, 0.2);
+}
+
+.nav-link.add-new-art i {
+    font-size: 0.9em;
 }

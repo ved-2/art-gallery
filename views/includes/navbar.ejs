@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-md bg-body-light border-bottom sticky-top">
+<!-- <nav class="navbar navbar-expand-md bg-body-light border-bottom sticky-top">
     <div class="container-fluid">
         <a class="navbar-brand" href="/"><i class="fa-brands fa-artstation"></i></a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
@@ -13,6 +13,42 @@
                 <a class="nav-link" href="/artists">Artists</a>
                 <a class="nav-link" href="/exhibition">Exhibitions</a>
                 <a class="nav-link" href="/team">Team</a>
+            </div>
+        </div>
+    </div>
+</nav> -->
+
+<nav class="navbar navbar-expand-md navbar-light">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/">
+            <i class="fa-regular fa-compass"></i>
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+                <% if (typeof isAdmin !== 'undefined' && isAdmin) { %>
+                    <!-- Admin Navbar -->
+                    <a class="nav-link" href="/arts">Gallery</a>
+                    <a class="nav-link add-new-art" href="/arts/new">
+                        <i class="fas fa-plus"></i> Add New Art
+                    </a>
+                    <a class="nav-link" href="/artists">Artists</a>
+                    <a class="nav-link" href="/exhibition">Exhibition</a>
+                    <a class="nav-link" href="/team">Team</a>
+                <% } else if (typeof isUser !== 'undefined' && isUser) { %>
+                    <!-- User Navbar -->
+                    <a class="nav-link" href="/arts-user">Gallery</a>
+                    <a class="nav-link" href="/artists">Artists</a>
+                    <a class="nav-link" href="/exhibition">Exhibition</a>
+                    <a class="nav-link" href="/team">Team</a>
+                <% } %>
+            </div>
+            <div class="navbar-nav ms-auto">
+                <% if (typeof isUser !== 'undefined' || typeof isAdmin !== 'undefined') { %>
+                    <a class="nav-link" href="/logout">Logout</a>
+                <% } %>
             </div>
         </div>
     </div>

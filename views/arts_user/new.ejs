@@ -1,0 +1,58 @@
+<% layout("/layouts/boilerplate") %>
+<div class="row mt-3">
+    <div class="col-8 offset-2">
+        <h3>Create a New Art</h3>
+        <br>
+        <form method="POST" action="/arts">
+            
+            <div class="mb-3">
+                <label for="title" class="form-label">Title</label>
+                <input name="art[title]" placeholder="enter title" type="text" class="form-control"/>
+            </div>
+
+            <div class="mb-3">
+                <label for="description" class="form-label">Description</label>
+                <input name="art[description]" placeholder="enter description" type="text" class="form-control"/>
+            </div>
+
+            <div class="mb-3">
+                <label for="image" class="form-label">Upload Listing Image</label>
+                <input name="art[image]" placeholder="enter image url" type="text" class="form-control"/>
+            </div>
+
+            <div class="row">
+                <div class="mb-3 col-md-4">
+                    <label for="price" class="form-label">Price</label>
+                    <input name="art[price]" placeholder="enter price" type="number" class="form-control"/>
+                </div>
+                
+                <div class="mb-3 col-md-8">
+                    <label for="artistName" class="form-label">Artist Name</label>
+                    <input name="art[artistName]" placeholder="enter artist name" type="text" class="form-control"/>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label for="category">Category</label>
+                <select id="category" name="listing[category]" class="form-control" required>
+                    <option value="" disabled selected>Select an art category</option>
+                    <option value="Painting" >Painting</option>
+                    <option value="Sculpture">Sculpture</option>
+                    <option value="Digital Art">Digital Art</option>
+                    <option value="Photography">Photography</option>
+                    <option value="Calligraphy">Calligraphy</option>
+                    <option value="Abstract Art">Abstract Art</option>
+                    <option value="Portrait">Portrait</option>
+                    <option value="Landscape">Landscape</option>
+                    <option value="Street Art">Street Art</option>
+                    <option value="Collage">Collage</option>
+                    <option value="Installation Art">Installation Art</option>
+                </select>              
+            </div>
+            
+            <button class="btn btn-dark add-btn mt-3">Add</button>
+            <br> <br>
+        
+        </form>
+    </div>
+</div>

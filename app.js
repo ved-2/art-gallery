@@ -5,6 +5,7 @@ const Art = require('./models/arts.js');
 const path = require("path");
 const methodOverride = require("method-override");
 const ejsMate=require('ejs-mate');
+const session = require('express-session');
 
 const MONGO_URL ="mongodb://127.0.0.1:27017/digital_art_gallery";
 
@@ -27,36 +28,47 @@ app.use(methodOverride("_method"));
 app.engine("ejs", ejsMate);
 app.use(express.static(path.join(__dirname, "/public")));
 
+// Add this before your routes
+app.use(session({
+    secret: 'your-secret-key',
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: false } // set to true if using https
+}));
+
 app.get('/', async (req, res) => {
-    try {
-        const arts = await Art.find().limit(4).sort({ createdAt: -1 });
-        res.render('home', { arts });
-    } catch (error) {
-        console.error(error);
-        res.render('home', { arts: [] });
-    }
+    res.render("login.ejs", { error: null });
 });
 
 app.get("/arts", async (req, res) => {
+    if (!req.session.isAdmin) {
+        return res.redirect('/login');
+    }
     const allArts = await Art.find({});
-    res.render("arts/index.ejs", { allArts });
+    res.render("arts/index.ejs", { allArts, isAdmin: true });
 });
 
 
 // New Route
 app.get("/arts/new", (req, res) => {
-    res.render("arts/new.ejs");
+    if (!req.session.isAdmin) {
+        return res.redirect('/login');
+    }
+    res.render("arts/new.ejs", { isAdmin: true });
 });
 
 
 app.get("/arts/:id", async (req, res) => {
+    if (!req.session.isAdmin) {
+        return res.redirect('/login');
+    }
     let { id } = req.params;
     const artInstance = await Art.findById(id);
     if (!artInstance) {
         console.error(`Art with id ${id} not found`);
         return res.status(404).send("Art not found");
     }
-    res.render("arts/show.ejs", { artInstance });
+    res.render("arts/show.ejs", { artInstance, isAdmin: true });
 
 });
 
@@ -70,9 +82,12 @@ app.post("/arts", async (req, res) => {
 
 // Edit Route
 app.get("/arts/:id/edit", async (req, res) => {
+    if (!req.session.isAdmin) {
+        return res.redirect('/login');
+    }
     let { id } = req.params;
     const artInstance = await Art.findById(id);
-    res.render("arts/edit.ejs", { artInstance });
+    res.render("arts/edit.ejs", { artInstance, isAdmin: true });
 });
 
 
@@ -93,7 +108,10 @@ app.delete("/arts/:id", async (req, res) => {
 
 //team route
 app.get("/team", (req, res) => {
-    res.render("team.ejs");
+    res.render("team.ejs", { 
+        isUser: req.session.isUser,
+        isAdmin: req.session.isAdmin 
+    });
 });
 
 app.get("/artists", (req, res) => {
@@ -179,7 +197,11 @@ app.get("/artists", (req, res) => {
             contactNumber: "+33-1-4987-6543"
         }
     ];
-    res.render("artists.ejs", { artists });
+    res.render("artists.ejs", { 
+        artists, 
+        isUser: req.session.isUser,
+        isAdmin: req.session.isAdmin 
+    });
 });
 
 // Buy Route
@@ -190,7 +212,67 @@ app.get('/arts/:id/buy', async (req, res) => {
 
 // Exhibition Route
 app.get("/exhibition", (req, res) => {
-    res.render("exhibition.ejs");
+    res.render("exhibition.ejs", { 
+        isUser: req.session.isUser,
+        isAdmin: req.session.isAdmin 
+    });
+});
+
+app.get('/login', (req, res) => {
+    res.render('login.ejs', { error: null });
+});
+
+app.post('/login/admin', (req, res) => {
+    const { username, password } = req.body;
+    
+    // Check admin credentials
+    if (username === 'admin' && password === 'admin123') {
+        req.session.isAdmin = true;
+        req.session.isUser = false; // Make sure user flag is false
+        return res.redirect('/arts');
+    }
+    
+    res.render('login.ejs', { error: 'Invalid admin credentials' });
+});
+
+app.post('/login/user', (req, res) => {
+    const { username, password } = req.body;
+    
+    // Add your user authentication logic here
+    if (username && password) {
+        req.session.isUser = true;
+        return res.redirect('/arts-user');
+    }
+    
+    res.render('login.ejs', { error: 'Invalid user credentials' });
+});
+
+// User Arts Route (Read-only view)
+app.get("/arts-user", async (req, res) => {
+    const allArts = await Art.find({});
+    res.render("arts_user/index.ejs", { allArts, isUser: true });
+});
+
+// Individual Art View for Users
+app.get("/arts-user/:id", async (req, res) => {
+    try {
+        let { id } = req.params;
+        const artInstance = await Art.findById(id);
+        if (!artInstance) {
+            console.error(`Art with id ${id} not found`);
+            return res.redirect("/arts-user");
+        }
+        res.render("arts_user/show.ejs", { artInstance, isUser: true });
+    } catch (error) {
+        console.error("Error fetching art:", error);
+        res.redirect("/arts-user");
+    }
+});
+
+// Add logout route
+app.get('/logout', (req, res) => {
+    req.session.destroy();
+    res.redirect('/');
 });
 
 app.listen(3000, () => {

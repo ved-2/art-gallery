@@ -1,0 +1,28 @@
+<% layout("layouts/boilerplate") %>
+
+<div class="container mt-4">
+    <h1 class="text-center mb-4">Digital Art Gallery</h1>
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        <% for(let art of allArts) { %>
+            <div class="col">
+                <div class="user-art-card">
+                    <a href="/arts-user/<%= art._id %>" class="art-link">
+                        <div class="art-image-container">
+                            <img src="<%= art.image %>" class="card-img-top" alt="art image">
+                        </div>
+                        <div class="card-body p-3">
+                            <h5 class="card-title mb-2"><%= art.title %></h5>
+                            <p class="card-text text-muted mb-2"><%= art.description %></p>
+                            <div class="price-view-container">
+                                <p class="card-text price-tag">
+                                    ₹<%= art.price.toLocaleString("en-IN") %>
+                                </p>
+                                <span class="btn btn-view">View Details</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        <% } %>
+    </div>
+</div>
