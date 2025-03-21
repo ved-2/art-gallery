@@ -7,42 +7,108 @@
                 <div class="card-body p-4">
                     <h1 class="text-center mb-4">Add New Art</h1>
                     
-                    <form action="/arts" method="POST">
+                    <% if (typeof error !== 'undefined' && error) { %>
+                        <div class="alert alert-danger" role="alert">
+                            <%= error %>
+                        </div>
+                    <% } %>
+                    
+                    <form action="/arts" method="POST" class="needs-validation" novalidate>
                         <div class="mb-3">
                             <label for="title" class="form-label">Title</label>
-                            <input type="text" class="form-control" id="title" name="art[title]" required>
+                            <input type="text" 
+                                   class="form-control" 
+                                   id="title" 
+                                   name="art[title]" 
+                                   required
+                                   minlength="3"
+                                   maxlength="100"
+                                   value="<%= typeof art !== 'undefined' ? art.title : '' %>">
+                            <div class="invalid-feedback">
+                                Title must be between 3 and 100 characters.
+                            </div>
                         </div>
 
                         <div class="mb-3">
                             <label for="description" class="form-label">Description</label>
-                            <textarea class="form-control" id="description" name="art[description]" rows="3" required></textarea>
+                            <textarea class="form-control" 
+                                      id="description" 
+                                      name="art[description]" 
+                                      rows="3" 
+                                      required
+                                      minlength="10"
+                                      maxlength="1000"><%= typeof art !== 'undefined' ? art.description : '' %></textarea>
+                            <div class="invalid-feedback">
+                                Description must be between 10 and 1000 characters.
+                            </div>
                         </div>
 
                         <div class="mb-3">
                             <label for="image" class="form-label">Image URL</label>
-                            <input type="url" class="form-control" id="image" name="art[image]" required>
+                            <input type="url" 
+                                   class="form-control" 
+                                   id="image" 
+                                   name="art[image]" 
+                                   required
+                                   pattern="https?://.+"
+                                   value="<%= typeof art !== 'undefined' ? art.image : '' %>">
+                            <div class="invalid-feedback">
+                                Please enter a valid URL (starting with http:// or https://).
+                            </div>
                         </div>
 
                         <div class="mb-3">
                             <label for="price" class="form-label">Price (₹)</label>
-                            <input type="number" class="form-control" id="price" name="art[price]" required>
+                            <input type="number" 
+                                   class="form-control" 
+                                   id="price" 
+                                   name="art[price]" 
+                                   required
+                                   min="0"
+                                   max="1000000"
+                                   value="<%= typeof art !== 'undefined' ? art.price : '' %>">
+                            <div class="invalid-feedback">
+                                Price must be between ₹0 and ₹1,000,000.
+                            </div>
                         </div>
 
                         <div class="mb-3">
                             <label for="category" class="form-label">Category</label>
-                            <select class="form-select" id="category" name="art[category]" required>
-                                <option value="">Select a category</option>
-                                <option value="Digital Painting">Digital Painting</option>
-                                <option value="3D Art">3D Art</option>
-                                <option value="Pixel Art">Pixel Art</option>
-                                <option value="Vector Art">Vector Art</option>
-                                <option value="NFT">NFT</option>
+                            <select class="form-select" 
+                                    id="category" 
+                                    name="art[category]" 
+                                    required>
+                                <option value="" disabled selected>Select an art category</option>
+                                <option value="Painting" <%= typeof art !== 'undefined' && art.category === 'Painting' ? 'selected' : '' %>>Painting</option>
+                                <option value="Sculpture" <%= typeof art !== 'undefined' && art.category === 'Sculpture' ? 'selected' : '' %>>Sculpture</option>
+                                <option value="Digital Art" <%= typeof art !== 'undefined' && art.category === 'Digital Art' ? 'selected' : '' %>>Digital Art</option>
+                                <option value="Photography" <%= typeof art !== 'undefined' && art.category === 'Photography' ? 'selected' : '' %>>Photography</option>
+                                <option value="Calligraphy" <%= typeof art !== 'undefined' && art.category === 'Calligraphy' ? 'selected' : '' %>>Calligraphy</option>
+                                <option value="Abstract Art" <%= typeof art !== 'undefined' && art.category === 'Abstract Art' ? 'selected' : '' %>>Abstract Art</option>
+                                <option value="Portrait" <%= typeof art !== 'undefined' && art.category === 'Portrait' ? 'selected' : '' %>>Portrait</option>
+                                <option value="Landscape" <%= typeof art !== 'undefined' && art.category === 'Landscape' ? 'selected' : '' %>>Landscape</option>
+                                <option value="Street Art" <%= typeof art !== 'undefined' && art.category === 'Street Art' ? 'selected' : '' %>>Street Art</option>
+                                <option value="Collage" <%= typeof art !== 'undefined' && art.category === 'Collage' ? 'selected' : '' %>>Collage</option>
+                                <option value="Installation Art" <%= typeof art !== 'undefined' && art.category === 'Installation Art' ? 'selected' : '' %>>Installation Art</option>
                             </select>
+                            <div class="invalid-feedback">
+                                Please select a category.
+                            </div>
                         </div>
 
                         <div class="mb-3">
                             <label for="artistName" class="form-label">Artist Name</label>
-                            <input type="text" class="form-control" id="artistName" name="art[artistName]" required>
+                            <input type="text" 
+                                   class="form-control" 
+                                   id="artistName" 
+                                   name="art[artistName]" 
+                                   required
+                                   minlength="2"
+                                   maxlength="50"
+                                   value="<%= typeof art !== 'undefined' ? art.artistName : '' %>">
+                            <div class="invalid-feedback">
+                                Artist name must be between 2 and 50 characters.
+                            </div>
                         </div>
 
                         <div class="text-center">
@@ -56,3 +122,47 @@
         </div>
     </div>
 </div>
+
+<script>
+// Form validation script
+(function () {
+    'use strict'
+
+    // Fetch all forms that need validation
+    const forms = document.querySelectorAll('.needs-validation')
+
+    // Loop over them and prevent submission
+    Array.from(forms).forEach(form => {
+        form.addEventListener('submit', event => {
+            if (!form.checkValidity()) {
+                event.preventDefault()
+                event.stopPropagation()
+            }
+
+            form.classList.add('was-validated')
+        }, false)
+    })
+})()
+
+// Add preview for image URL
+const imageInput = document.getElementById('image');
+const previewContainer = document.createElement('div');
+previewContainer.className = 'mt-2';
+imageInput.parentNode.appendChild(previewContainer);
+
+imageInput.addEventListener('input', function() {
+    const url = this.value;
+    if (url && url.match(/^https?:\/\/.+/)) {
+        previewContainer.innerHTML = `
+            <img src="${url}" 
+                 alt="Preview" 
+                 style="max-width: 200px; max-height: 200px; object-fit: contain;"
+                 onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"
+                 onload="this.style.display='block'; this.nextElementSibling.style.display='none';">
+            <div class="alert alert-danger" style="display: none;">Invalid image URL</div>
+        `;
+    } else {
+        previewContainer.innerHTML = '';
+    }
+});
+</script>

@@ -36,6 +36,11 @@ app.use(session({
     cookie: { secure: false } // set to true if using https
 }));
 
+// Add this after your imports for better error logging
+process.on('unhandledRejection', (reason, promise) => {
+    console.log('Unhandled Rejection at:', promise, 'reason:', reason);
+});
+
 app.get('/', async (req, res) => {
     res.render("login.ejs", { error: null });
 });
@@ -49,7 +54,7 @@ app.get("/arts", async (req, res) => {
 });
 
 
-// New Route
+// New Route - Just render the form
 app.get("/arts/new", (req, res) => {
     if (!req.session.isAdmin) {
         return res.redirect('/login');
@@ -72,11 +77,23 @@ app.get("/arts/:id", async (req, res) => {
 
 });
 
-// Create Route
+// Create Route - Handle the form submission and redirect
 app.post("/arts", async (req, res) => {
-    const newArt = new Art(req.body.art);
-    await newArt.save();
-    res.redirect("/arts");
+    try {
+        console.log("Received art data:", req.body.art);
+        const newArt = new Art(req.body.art);
+        const savedArt = await newArt.save();
+        console.log("Art saved successfully:", savedArt);
+        return res.redirect("/arts"); // Redirect to index page after successful save
+    } catch (err) {
+        console.error("Error creating art:", err);
+        // If there's an error, render the form again with the error message
+        return res.render("arts/new.ejs", { 
+            error: err.message,
+            art: req.body.art,
+            isAdmin: true 
+        });
+    }
 });
 
 
@@ -275,6 +292,15 @@ app.get('/logout', (req, res) => {
     res.redirect('/');
 });
 
+// Add this at the bottom of your file
+app.use((err, req, res, next) => {
+    console.error(err.stack);
+    res.status(500).send('Something broke!');
+});
+
+// Update your server start to include error handling
 app.listen(3000, () => {
-    console.log('server started');
+    console.log('Server is running on port 3000');
+}).on('error', (err) => {
+    console.error('Server failed to start:', err);
 });
