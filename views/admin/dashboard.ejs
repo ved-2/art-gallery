@@ -1,0 +1,225 @@
+<% layout("layouts/boilerplate") %>
+
+<div class="container mt-4">
+    <div class="row align-items-center mb-4">
+        <!-- Title Section -->
+        <div class="col-md-4">
+            <h1 class="dashboard-title">Digital Art Gallery</h1>
+            <p class="text-muted">Admin Dashboard Overview</p>
+        </div>
+
+        <!-- Stats Section -->
+        <div class="col-md-8">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="stats-card bg-primary text-white">
+                        <div class="stats-icon">
+                            <i class="fas fa-image"></i>
+                        </div>
+                        <div class="stats-info">
+                            <h3><%= stats.totalArts %></h3>
+                            <p>Artworks</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="stats-card bg-success text-white">
+                        <div class="stats-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="stats-info">
+                            <h3><%= stats.totalArtists %></h3>
+                            <p>Artists</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="stats-card bg-info text-white">
+                        <div class="stats-icon">
+                            <i class="fas fa-rupee-sign"></i>
+                        </div>
+                        <div class="stats-info">
+                            <h3>₹<%= stats.totalValue.toLocaleString("en-IN") %></h3>
+                            <p>Value</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="stats-card bg-warning text-white">
+                        <div class="stats-icon">
+                            <i class="fas fa-tags"></i>
+                        </div>
+                        <div class="stats-info">
+                            <h3><%= stats.categoryStats.length %></h3>
+                            <p>Categories</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- Recent Artworks -->
+        <div class="col-md-6 mb-4">
+            <div class="dashboard-card">
+                <h4 class="card-title mb-3">
+                    <i class="fas fa-clock"></i> Recent Artworks
+                </h4>
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Title</th>
+                                <th>Artist</th>
+                                <th>Price</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% stats.recentArts.forEach(art => { %>
+                                <tr>
+                                    <td><%= art.title %></td>
+                                    <td><%= art.artistName %></td>
+                                    <td>₹<%= art.price.toLocaleString("en-IN") %></td>
+                                </tr>
+                            <% }) %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Top Artists -->
+        <div class="col-md-6 mb-4">
+            <div class="dashboard-card">
+                <h4 class="card-title mb-3">
+                    <i class="fas fa-star"></i> Top Artists
+                </h4>
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Artist</th>
+                                <th>Artworks</th>
+                                <th>Total Value</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% stats.topArtists.forEach(artist => { %>
+                                <tr>
+                                    <td><%= artist._id %></td>
+                                    <td><%= artist.artworks %></td>
+                                    <td>₹<%= artist.totalValue.toLocaleString("en-IN") %></td>
+                                </tr>
+                            <% }) %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Category Distribution -->
+        <div class="col-md-12">
+            <div class="dashboard-card">
+                <h4 class="card-title mb-3">
+                    <i class="fas fa-chart-pie"></i> Category Distribution
+                </h4>
+                <div class="category-stats">
+                    <% stats.categoryStats.forEach(category => { %>
+                        <div class="category-item">
+                            <div class="d-flex justify-content-between mb-1">
+                                <span><%= category._id %></span>
+                                <span class="badge bg-primary"><%= category.count %></span>
+                            </div>
+                            <div class="progress">
+                                <div class="progress-bar" role="progressbar" 
+                                     style="width: <%= (category.count/stats.totalArts)*100 %>%"></div>
+                            </div>
+                        </div>
+                    <% }) %>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.dashboard-title {
+    font-size: 2rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: #2c3e50;
+}
+
+.stats-card {
+    padding: 1rem;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    height: 100%;
+}
+
+.stats-icon {
+    font-size: 1.5rem;
+    margin-right: 1rem;
+}
+
+.stats-info h3 {
+    margin: 0;
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.stats-info p {
+    margin: 0;
+    font-size: 0.9rem;
+    opacity: 0.9;
+}
+
+.dashboard-card {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.category-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1rem;
+}
+
+.category-item {
+    margin-bottom: 1rem;
+}
+
+.progress {
+    height: 8px;
+    border-radius: 4px;
+}
+
+.table {
+    margin-bottom: 0;
+}
+
+.card-title {
+    color: #2c3e50;
+}
+
+.card-title i {
+    margin-right: 0.5rem;
+}
+
+@media (max-width: 768px) {
+    .dashboard-title {
+        text-align: center;
+        margin-bottom: 1.5rem;
+    }
+    
+    .stats-card {
+        margin-bottom: 1rem;
+    }
+}
+</style> 

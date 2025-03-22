@@ -242,10 +242,9 @@ app.get('/login', (req, res) => {
 app.post('/login/admin', (req, res) => {
     const { username, password } = req.body;
     
-    // Check admin credentials
     if (username === 'admin' && password === 'admin123') {
         req.session.isAdmin = true;
-        req.session.isUser = false; // Make sure user flag is false
+        req.session.isUser = false;
         return res.redirect('/arts');
     }
     
@@ -292,12 +291,64 @@ app.get('/logout', (req, res) => {
     res.redirect('/');
 });
 
+// Admin Dashboard Route with Analytics
+app.get("/admin/dashboard", async (req, res) => {
+    if (!req.session.isAdmin) {
+        return res.redirect('/login');
+    }
+    try {
+        // Basic Statistics
+        const totalArts = await Art.countDocuments();
+        const uniqueArtists = await Art.distinct('artistName');
+        const totalArtists = uniqueArtists.length;
+        const totalValue = await Art.aggregate([
+            { $group: { _id: null, total: { $sum: "$price" } } }
+        ]);
+
+        // Category Distribution
+        const categoryStats = await Art.aggregate([
+            { $group: { _id: "$category", count: { $sum: 1 } } },
+            { $sort: { count: -1 } }
+        ]);
+
+        // Recent Artworks
+        const recentArts = await Art.find()
+            .sort({ createdAt: -1 })
+            .limit(5);
+
+        // Top Artists
+        const topArtists = await Art.aggregate([
+            { $group: { 
+                _id: "$artistName", 
+                artworks: { $sum: 1 },
+                totalValue: { $sum: "$price" }
+            }},
+            { $sort: { artworks: -1 } },
+            { $limit: 5 }
+        ]);
+
+        res.render("admin/dashboard.ejs", {
+            isAdmin: true,
+            stats: {
+                totalArts,
+                totalArtists,
+                totalValue: totalValue[0]?.total || 0,
+                categoryStats,
+                recentArts,
+                topArtists
+            }
+        });
+    } catch (error) {
+        console.error("Dashboard Error:", error);
+        res.status(500).send("Error loading dashboard");
+    }
+});
+
 // Add this at the bottom of your file
 app.use((err, req, res, next) => {
     console.error(err.stack);
     res.status(500).send('Something broke!');
 });
-
 // Update your server start to include error handling
 app.listen(3000, () => {
     console.log('Server is running on port 3000');
